@@ -65,22 +65,36 @@
         // No need to change anything ABOVE this line ^
 
         return (
-          <h1>Draw a Card</h1>
-          <button onClick={}>
-            Click to Draw a Card
-          </button>
-          <button onclick={shuffle}>
-            Return Cards and Shuffle Deck
-          </button>
-          <div style={handStyles}>
-            {hand.map((card, index) => {
-              return (
-                <div style={cardStyles} key={index}>
-                  {card}
-                </div>
-              )
-            })}
-          </div>
+
+        //  Bug: Imagine all the HTML-like elements just running thru the street without a parent present.
+        //  "Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>?" - When writing JSX code in JavaScript, you need to wrap adjacent elements in a single parent element or use a JSX fragment.
+
+          <>
+            <h1>Draw a Card</h1>
+
+            {/*  Bug: <button onClick={}>  */}
+            {/*  "JSX attributes must only be assigned a non-empty expression." - In JSX, you cannot assign an attribute to an empty or undefined value. You must provide a non-empty expression, such as a string or a variable, as the attribute value. The missing expression is drawCard.  */}
+
+            <button onClick={drawCard}>
+              Click to Draw a Card
+            </button>
+
+            {/*  Bug: <button onclick={shuffle}>  */}
+            {/*  "Invalid event handler property `onclick`. Did you mean `onClick`? - The warning message is telling us that there is a typo in the button element code. The onclick attribute should be onClick according to React's naming conventions for event handler attributes in JSX. By changing the onclick attribute to onClick, the event handler will be recognized by React and the code will work as intended.  */}
+
+            <button onClick={shuffle}>
+              Return Cards and Shuffle Deck
+            </button>
+            <div style={handStyles}>
+              {hand.map((card, index) => {
+                return (
+                  <div style={cardStyles} key={index}>
+                    {card}
+                  </div>
+                )
+              })}
+            </div>
+          </>  
         )
       }
 
@@ -92,3 +106,5 @@
     </script>
   </body>
 </html>
+
+<!--This was extremely fun and I could spend all day going thru code and fixing bugs like this! -->
